@@ -17,7 +17,7 @@ while True:
         
         print("\nVolviendo al menu Principal...")
     
-    if opcion == 2:#Modifica la BDD
+    elif opcion == 2:#Modifica la BDD
         
         print("======================================")
         print("Ud esta por modificar la Ley")
