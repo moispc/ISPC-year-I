@@ -1,3 +1,4 @@
+2
 from classes.connection import Connection
 from classes.users import Usuario, Admin
 
@@ -75,7 +76,7 @@ while True:
                 
                 print("\nVolviendo al menu Principal...")
             
-            if opcion == 2:#Consulta a la BDD por palabra clave
+            elif opcion == 2:#Consulta a la BDD por palabra clave
                 
                 print("======================================")
                 print("Ud esta realizando una consulta")
@@ -83,7 +84,7 @@ while True:
                 
                 print("\nVolviendo al menu Principal...")
     
-            if opcion ==3:#Consulta a la BDD por numero de ley
+            elif opcion ==3:#Consulta a la BDD por numero de ley
                 
                 print("======================================")
                 print("Ud esta realizando una consulta")
