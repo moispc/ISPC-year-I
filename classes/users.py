@@ -34,13 +34,38 @@ class Usuario:
     # R - READ
 
     def leer_ley(self, connection):
+        """ muestra la ley dependiendo del numero de ley introducido """
+        ley = int(input("Introducir el número de ley: "))
+        cursor = connection.cursor
+        cursor.execute(f'SELECT `Tipo de normativa`, `Nro. Normativa`, Fecha, Descripción, `Organo Legislativo`, Jurisdiccion FROM ley\
+                        JOIN jurisdiccion\
+                        ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion\
+                        WHERE `Nro. Normativa`={ley};')
+        rows = cursor.fetchall()
+
+        for row in rows:
+            print(row)
+            print("")
         
-        print("llamar a una funcion para leer la ley")
 
 
     def leer_palabra(self, connection):
         """ muestra la ley dependiendo del numero de ley introducido """
-        
+        palabra = input("Introduzca la palabra clave: ")
+        cursor = connection.cursor
+        cursor.execute(f'SELECT `Tipo de normativa`, `Nro. Normativa`, Fecha, Descripción, `Organo Legislativo`, Jurisdiccion FROM palabras\
+                        JOIN palabras_ley\
+                        ON palabras.idPalabras = palabras_ley.Palabras_idPalabras\
+                        JOIN ley\
+                        ON ley.`Nro. Registro` = palabras_ley.`Ley_Nro. Registro`\
+                        JOIN jurisdiccion\
+                        ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion\
+                        WHERE `Palabras clave` = "{palabra}"')
+        rows = cursor.fetchall()
+
+        for row in rows:
+            print(row)
+            print("")
 
     
 
