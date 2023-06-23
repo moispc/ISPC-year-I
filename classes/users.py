@@ -44,7 +44,7 @@ class Usuario:
                 ley = 0
                 print("Solo puede ingresar números!!!")
         cursor = connection.cursor
-        cursor.execute(f'SELECT `Tipo de normativa`, `Nro. Normativa`, Fecha, Descripción, `Organo Legislativo`, Jurisdiccion FROM ley\
+        cursor.execute(f'SELECT `Tipo de normativa`, `Nro. Normativa`, Fecha, Descripcion, `Organo Legislativo`, Jurisdiccion FROM ley\
                         JOIN jurisdiccion\
                         ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion\
                         WHERE `Nro. Normativa`={ley};')
@@ -60,7 +60,7 @@ class Usuario:
         """ muestra la ley dependiendo del numero de ley introducido """
         palabra = input("Introduzca la palabra clave: ")
         cursor = connection.cursor
-        cursor.execute(f'SELECT `Tipo de normativa`, `Nro. Normativa`, Fecha, Descripción, `Organo Legislativo`, Jurisdiccion FROM palabras\
+        cursor.execute(f'SELECT `Tipo de normativa`, `Nro. Normativa`, Fecha, Descripcion, `Organo Legislativo`, Jurisdiccion FROM palabras\
                         JOIN palabras_ley\
                         ON palabras.idPalabras = palabras_ley.Palabras_idPalabras\
                         JOIN ley\
@@ -119,7 +119,7 @@ class Admin(Usuario):
     # C - CREATE   
     def agregar_ley(self, connection):
         cursor = connection.cursor
-        sql_ley = "INSERT INTO ley(`Tipo de normativa`, `Nro. Normativa`, Fecha, Descripción, Categoria, Jurisdiccion_idJurisdiccion) VALUES (%s, %s, %s, %s, %s, %s)"
+        sql_ley = "INSERT INTO ley(`Tipo de normativa`, `Nro. Normativa`, Fecha, Descripcion, Categoria, Jurisdiccion_idJurisdiccion) VALUES (%s, %s, %s, %s, %s, %s)"
         sql_palabra = "INSERT INTO palabras (`Palabras clave`) VALUES (%s)"
         sql_ley_palabra = "INSERT INTO palabras_ley (`Ley_Nro. Registro`,Palabras_idPalabras) VALUES (%s, %s)"
 
@@ -217,7 +217,7 @@ class Admin(Usuario):
             cursor.execute(f"UPDATE ley SET `Tipo de normativa`= '{tipo_normativa}' WHERE `Nro. Registro`={id_ley};")
             cursor.execute(f"UPDATE ley SET `Nro. Normativa`= '{numero_normativa}' WHERE `Nro. Registro`={id_ley};")
             cursor.execute(f"UPDATE ley SET Fecha= '{fecha_normativa}' WHERE `Nro. Registro`={id_ley};")
-            cursor.execute(f"UPDATE ley SET Descripción= '{descripcion_normativa}' WHERE `Nro. Registro`={id_ley};")
+            cursor.execute(f"UPDATE ley SET Descripcion= '{descripcion_normativa}' WHERE `Nro. Registro`={id_ley};")
             cursor.execute(f"UPDATE ley SET Categoria= '{categoria_normativa}' WHERE `Nro. Registro`={id_ley};")
             cursor.execute(f"UPDATE ley SET Jurisdiccion_idJurisdiccion= '{jurisdiccion_normativa}' WHERE `Nro. Registro`={id_ley};")
             connection.connection.commit()

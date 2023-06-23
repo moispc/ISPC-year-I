@@ -55,7 +55,7 @@ CREATE TABLE `ley` (
   `Tipo de normativa` varchar(45) NOT NULL,
   `Nro. Normativa` int NOT NULL,
   `Fecha` date NOT NULL,
-  `Descripción` varchar(450) NOT NULL,
+  `Descripcion` varchar(450) NOT NULL,
   `Categoria` varchar(45) NOT NULL,
   `Jurisdiccion_idJurisdiccion` int NOT NULL,
   PRIMARY KEY (`Nro. Registro`,`Jurisdiccion_idJurisdiccion`),
