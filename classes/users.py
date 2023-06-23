@@ -84,8 +84,22 @@ class Admin(Usuario):
     
     # D - DELETE
     def borrar_ley(self, connection):
+        """ muestra la ley dependiendo del numero de ley introducido """
+        cursor = connection.cursor
+        cursor.execute('SELECT `Nro. Registro`, `Nro. Normativa`, `Organo Legislativo` FROM ley\
+                        JOIN jurisdiccion\
+                        ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion;')
+        rows = cursor.fetchall()
+
+        for row in rows:
+            print(row)
         
-        print("llamar a una funcion para borrar una ley")
+        id_ley = int(input("Por favor ingrese el id de la ley que desea borrar: "))
+
+        cursor.execute(f"DELETE FROM ley WHERE `Nro. Registro` = {id_ley};")
+        connection.connection.commit()
+        
+       
         
     # C - CREATE   
     def agregar_ley(self, connection):
@@ -121,8 +135,34 @@ class Admin(Usuario):
         
     # U - UPDATE
     def modificar_ley(self):
+        cursor = connection.cursor
+        cursor.execute('SELECT `Nro. Registro`, `Nro. Normativa`, `Organo Legislativo` FROM ley\
+                        JOIN jurisdiccion\
+                        ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion;')
+        rows = cursor.fetchall()
+
+        for row in rows:
+            print(row)
+
+        id_ley = int(input("Por favor ingrese el id de la ley que desea modificar: "))
         
-        print("llamar a una funcion para modificar una ley")
+        tipo_normativa = input("Ingrese el tipo de normativa: ")
+        numero_normativa = int(input("Ingrese el numero de la normativa: "))
+        fecha_normativa = input("Ingrese la fecha de la normativa con el formato YYYY-MM-DD: ")
+        descripcion_normativa = input("Ingrese la descripción de la normativa: ")
+        categoria_normativa = input ("Ingrese la categoría de la normativa: ")
+        jurisdiccion_normativa = int(input("Ingrese 1 si la normativa es nacional o 2 si es provincial: "))
+
+        cursor.execute(f"UPDATE ley SET `Tipo de normativa`= '{tipo_normativa}' WHERE `Nro. Registro`={id_ley};")
+        cursor.execute(f"UPDATE ley SET `Nro. Normativa`= '{numero_normativa}' WHERE `Nro. Registro`={id_ley};")
+        cursor.execute(f"UPDATE ley SET Fecha= '{fecha_normativa}' WHERE `Nro. Registro`={id_ley};")
+        cursor.execute(f"UPDATE ley SET Descripción= '{descripcion_normativa}' WHERE `Nro. Registro`={id_ley};")
+        cursor.execute(f"UPDATE ley SET Categoria= '{categoria_normativa}' WHERE `Nro. Registro`={id_ley};")
+        cursor.execute(f"UPDATE ley SET Jurisdiccion_idJurisdiccion= '{jurisdiccion_normativa}' WHERE `Nro. Registro`={id_ley};")
+        connection.connection.commit()
+
+        
+        
         
 
 ###############################################################################
