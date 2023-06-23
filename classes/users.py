@@ -64,8 +64,35 @@ class Admin(Usuario):
         
     # C - CREATE   
     def agregar_ley(self, connection):
+        cursor = connection.cursor
+        sql_ley = "INSERT INTO ley(`Tipo de normativa`, `Nro. Normativa`, Fecha, Descripción, Categoria, Jurisdiccion_idJurisdiccion) VALUES (%s, %s, %s, %s, %s, %s)"
+        sql_palabra = "INSERT INTO palabras (`Palabras clave`) VALUES (%s)"
+        sql_ley_palabra = "INSERT INTO palabras_ley (`Ley_Nro. Registro`,Palabras_idPalabras) VALUES (%s, %s)"
+
+        tipo_normativa = input("Ingrese el tipo de normativa: ")
+        numero_normativa = int(input("Ingrese el numero de la normativa: "))
+        fecha_normativa = input("Ingrese la fecha de la normativa con el formato YYYY-MM-DD: ")
+        descripcion_normativa = input("Ingrese la descripción de la normativa: ")
+        categoria_normativa = input ("Ingrese la categoría de la normativa: ")
+        jurisdiccion_normativa = int(input("Ingrese 1 si la normativa es nacional o 2 si es provincial: "))
+        palabra_clave = input("Ingrese una palabra clave para esta normativa: ")
+
+        val_ley = (tipo_normativa, numero_normativa, fecha_normativa, descripcion_normativa, categoria_normativa, jurisdiccion_normativa)
+        cursor.execute(sql_ley, val_ley)
+
+        ley_id= cursor.lastrowid
+
+        val_palabra = (palabra_clave,)
+        cursor.execute(sql_palabra, val_palabra)
+
+        palabra_id= cursor.lastrowid
         
-        print("llamar a una funcion para agregar una ley")
+        val_ley_palabra = (ley_id, palabra_id)
+        cursor.execute(sql_ley_palabra, val_ley_palabra)
+
+        connection.connection.commit()
+        
+    
         
     # U - UPDATE
     def modificar_ley(self):
