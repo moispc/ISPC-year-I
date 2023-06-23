@@ -134,7 +134,7 @@ class Admin(Usuario):
     
         
     # U - UPDATE
-    def modificar_ley(self):
+    def modificar_ley(self,connection):
         cursor = connection.cursor
         cursor.execute('SELECT `Nro. Registro`, `Nro. Normativa`, `Organo Legislativo` FROM ley\
                         JOIN jurisdiccion\
