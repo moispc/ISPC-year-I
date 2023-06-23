@@ -1,7 +1,7 @@
 from classes.connection import Connection
 from classes.users import Usuario, Admin
 
-modoin = int(input("1.Admin\n2.Usuario"))
+modoin = int(input("1.Admin\n2.Usuario\nSu eleccion: "))
 
 contador = 0
 
@@ -93,13 +93,13 @@ if modoin == 1:
             exit()
         else: #opcion invalida
             print("======================================")
-            print("INGRESE UNA OPCION VALIDA\nOPCIONES DEL 1 AL 4!!!")        
+            print("INGRESE UNA OPCION VALIDA\nOPCIONES DEL 1 AL 5!!!")        
             
-    if contador == 3:
-        print("======================================")
-        print("CUENTA BLOQUEADA")
-        print("======================================")
-        exit()
+if contador == 3:
+    print("======================================")
+    print("CUENTA BLOQUEADA")
+    print("======================================")
+    exit()
     
 elif modoin == 2:
     contraseña = input("ingrese la contraseña de sql: ")
