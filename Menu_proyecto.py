@@ -1,4 +1,3 @@
-2
 from classes.connection import Connection
 from classes.users import Usuario, Admin
 
