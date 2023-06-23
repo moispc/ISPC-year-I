@@ -1,14 +1,31 @@
 ## Proyecto integrador Programador 2023
 
+## Planteamiento del problema
+El Poder Judicial de la Provincia de Córdoba, le solicita a su empresa, la
+realización de un software que le permita realizar consultas a los usuarios, de las
+distintas leyes vigentes. El cliente, solicitó que dicha consulta se pueda hacer a partir
+de: 
+   * Número de ley
+   * Palabras claves 
+
+## Solución
+Realizamos un software en Python utilizando el servidor local de MySQL, al iniciar el programa
+le pedirá la contraseña del servidor y la primera vez que se corra el programa generará la base
+de datos ispc_lawdb 4 tablas relacionadas y llenará dichas tablas con leyes.
+El sistema permite el ingreso de usuarios particulares los cuales solamente pueden consultar la 
+base de datos y también la opción de ingreso a la cuenta administrador "admin" cuya contraseña
+es "admin". La cuenta administrador puede agregar leyes, modificar las existentes o eliminarlas.
+
+## Tecnologías utilizadas
+* SQL
+* MySQL
+* Python
 
 ## Integrantes 
 
 * Veronica Ludemann
   * veronicaludemann67@gmail.com
   * https://github.com/veroludemann
-* Garcia Luis Alberto
-  * uruguey.lg@gmail.com
-  * https://github.com/uruguey
 * Tiziano Joaquín Mina
   * tizianominajo@gmail.com
   * https://github.com/Tizianomina
@@ -33,3 +50,7 @@
 * Diego Guzmán
   * cerveux@gmail.com
   * https://github.com/cerveux
+
+## Deploy 🚀
+
+Para ver la aplicación funcionando, deberás hacer una copia y correrla en local desde Menu_proyecto.py

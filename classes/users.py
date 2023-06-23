@@ -28,14 +28,21 @@ class Usuario:
             # the DROP TABLE commands
                 try:
                     cursor.execute(command)
-                except connection.Error as err:
+                except connection.error as err:
                     print("Error de conexión: {0}".format(err))
     
     # R - READ
 
     def leer_ley(self, connection):
         """ muestra la ley dependiendo del numero de ley introducido """
-        ley = int(input("Introducir el número de ley: "))
+        ley = 0
+        while ley == 0:
+            try:
+                ley = int(input("Introducir el número de ley: "))
+            except Exception as err:
+                print(err)
+                ley = 0
+                print("Solo puede ingresar números!!!")
         cursor = connection.cursor
         cursor.execute(f'SELECT `Tipo de normativa`, `Nro. Normativa`, Fecha, Descripción, `Organo Legislativo`, Jurisdiccion FROM ley\
                         JOIN jurisdiccion\
@@ -88,13 +95,21 @@ class Admin(Usuario):
         cursor = connection.cursor
         cursor.execute('SELECT `Nro. Registro`, `Nro. Normativa`, `Organo Legislativo` FROM ley\
                         JOIN jurisdiccion\
-                        ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion;')
+                        ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion\
+                        ORDER BY `Nro. Registro`;')
         rows = cursor.fetchall()
 
         for row in rows:
             print(row)
         
-        id_ley = int(input("Por favor ingrese el id de la ley que desea borrar: "))
+        id_ley = 0
+        while id_ley == 0:
+            try:
+                id_ley = int(input("Por favor ingrese el id de la ley que desea borrar: "))
+            except Exception as err:
+                print(err)
+                id_ley = 0
+                print("Solo puede ingresar números!!!")
 
         cursor.execute(f"DELETE FROM ley WHERE `Nro. Registro` = {id_ley};")
         connection.connection.commit()
@@ -109,57 +124,108 @@ class Admin(Usuario):
         sql_ley_palabra = "INSERT INTO palabras_ley (`Ley_Nro. Registro`,Palabras_idPalabras) VALUES (%s, %s)"
 
         tipo_normativa = input("Ingrese el tipo de normativa: ")
-        numero_normativa = int(input("Ingrese el numero de la normativa: "))
+        numero_normativa = 0
+        while numero_normativa == 0:
+            try:
+                numero_normativa = int(input("Ingrese el numero de la normativa: "))
+            except Exception as err:
+                print(err)
+                numero_normativa = 0
+                print("Solo puede ingresar números!!!")
         fecha_normativa = input("Ingrese la fecha de la normativa con el formato YYYY-MM-DD: ")
         descripcion_normativa = input("Ingrese la descripción de la normativa: ")
         categoria_normativa = input ("Ingrese la categoría de la normativa: ")
-        jurisdiccion_normativa = int(input("Ingrese 1 si la normativa es nacional o 2 si es provincial: "))
+        jurisdiccion_normativa = 0
+        while jurisdiccion_normativa != 1 and jurisdiccion_normativa != 2:
+            try:
+                jurisdiccion_normativa = int(input("Ingrese 1 si la normativa es nacional o 2 si es provincial: "))
+            except Exception as err:
+                print(err)
+                jurisdiccion_normativa = 0
+                print("Solo puede ingresar números!!!")
         palabra_clave = input("Ingrese una palabra clave para esta normativa: ")
 
-        val_ley = (tipo_normativa, numero_normativa, fecha_normativa, descripcion_normativa, categoria_normativa, jurisdiccion_normativa)
-        cursor.execute(sql_ley, val_ley)
+        try:
+            val_ley = (tipo_normativa, numero_normativa, fecha_normativa, descripcion_normativa, categoria_normativa, jurisdiccion_normativa)
+            cursor.execute(sql_ley, val_ley)
 
-        ley_id= cursor.lastrowid
+            ley_id= cursor.lastrowid
 
-        val_palabra = (palabra_clave,)
-        cursor.execute(sql_palabra, val_palabra)
+            val_palabra = (palabra_clave,)
+            cursor.execute(sql_palabra, val_palabra)
 
-        palabra_id= cursor.lastrowid
+            palabra_id= cursor.lastrowid
+
+            val_ley_palabra = (ley_id, palabra_id)
+            cursor.execute(sql_ley_palabra, val_ley_palabra)
+
+            connection.connection.commit()
+            
+        except connection.error as err:
+            print("Error de conexión: {0}".format(err))
+
         
-        val_ley_palabra = (ley_id, palabra_id)
-        cursor.execute(sql_ley_palabra, val_ley_palabra)
-
-        connection.connection.commit()
         
     
         
     # U - UPDATE
     def modificar_ley(self,connection):
-        cursor = connection.cursor
-        cursor.execute('SELECT `Nro. Registro`, `Nro. Normativa`, `Organo Legislativo` FROM ley\
-                        JOIN jurisdiccion\
-                        ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion;')
-        rows = cursor.fetchall()
+        try:
+            cursor = connection.cursor
+            cursor.execute('SELECT `Nro. Registro`, `Nro. Normativa`, `Organo Legislativo` FROM ley\
+                            JOIN jurisdiccion\
+                            ON ley.Jurisdiccion_idJurisdiccion=jurisdiccion.idJurisdiccion;')
+            rows = cursor.fetchall()   
+        except connection.error as err:
+            print("Error de conexión: {0}".format(err))
+        
 
         for row in rows:
             print(row)
-
-        id_ley = int(input("Por favor ingrese el id de la ley que desea modificar: "))
+        
+        id_ley = "invalido"
+        while id_ley == "invalido":
+            try:
+                id_ley = int(input("Por favor ingrese el id de la ley que desea modificar: "))
+            except Exception as err:
+                print(err)
+                id_ley = "invalido"
+                print("Solo puede ingresar números!!!")
         
         tipo_normativa = input("Ingrese el tipo de normativa: ")
-        numero_normativa = int(input("Ingrese el numero de la normativa: "))
+        numero_normativa = 0
+        while numero_normativa == 0:
+            try:
+                numero_normativa = int(input("Ingrese el numero de la normativa: "))
+            except Exception as err:
+                print(err)
+                numero_normativa = 0
+                print("Solo puede ingresar números!!!")
         fecha_normativa = input("Ingrese la fecha de la normativa con el formato YYYY-MM-DD: ")
         descripcion_normativa = input("Ingrese la descripción de la normativa: ")
         categoria_normativa = input ("Ingrese la categoría de la normativa: ")
-        jurisdiccion_normativa = int(input("Ingrese 1 si la normativa es nacional o 2 si es provincial: "))
+        jurisdiccion_normativa = 0
+        while (jurisdiccion_normativa != 1) and (jurisdiccion_normativa != 2):
+            try:
+                jurisdiccion_normativa = int(input("Ingrese 1 si la normativa es nacional o 2 si es provincial: "))
+            except Exception as err:
+                print(err)
+                print("Solo puede ingresar números!!!")
+                jurisdiccion_normativa = 0
+        
+        try:
+            cursor.execute(f"UPDATE ley SET `Tipo de normativa`= '{tipo_normativa}' WHERE `Nro. Registro`={id_ley};")
+            cursor.execute(f"UPDATE ley SET `Nro. Normativa`= '{numero_normativa}' WHERE `Nro. Registro`={id_ley};")
+            cursor.execute(f"UPDATE ley SET Fecha= '{fecha_normativa}' WHERE `Nro. Registro`={id_ley};")
+            cursor.execute(f"UPDATE ley SET Descripción= '{descripcion_normativa}' WHERE `Nro. Registro`={id_ley};")
+            cursor.execute(f"UPDATE ley SET Categoria= '{categoria_normativa}' WHERE `Nro. Registro`={id_ley};")
+            cursor.execute(f"UPDATE ley SET Jurisdiccion_idJurisdiccion= '{jurisdiccion_normativa}' WHERE `Nro. Registro`={id_ley};")
+            connection.connection.commit()
+            
+        except connection.error as err:
+            print("Error de conexión: {0}".format(err))
 
-        cursor.execute(f"UPDATE ley SET `Tipo de normativa`= '{tipo_normativa}' WHERE `Nro. Registro`={id_ley};")
-        cursor.execute(f"UPDATE ley SET `Nro. Normativa`= '{numero_normativa}' WHERE `Nro. Registro`={id_ley};")
-        cursor.execute(f"UPDATE ley SET Fecha= '{fecha_normativa}' WHERE `Nro. Registro`={id_ley};")
-        cursor.execute(f"UPDATE ley SET Descripción= '{descripcion_normativa}' WHERE `Nro. Registro`={id_ley};")
-        cursor.execute(f"UPDATE ley SET Categoria= '{categoria_normativa}' WHERE `Nro. Registro`={id_ley};")
-        cursor.execute(f"UPDATE ley SET Jurisdiccion_idJurisdiccion= '{jurisdiccion_normativa}' WHERE `Nro. Registro`={id_ley};")
-        connection.connection.commit()
+        
 
         
         
